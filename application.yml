@@ -1,0 +1,70 @@
+# Setup Basic macros and known server names for reuse in config files
+kubernetes:
+  suffix: svc.cluster.local
+  mst:
+    namespace: mst-dev
+    domain: ${kubernetes.mst.namespace}.${kubernetes.suffix}
+
+spring:
+  application:
+    name: confclient
+  sleuth:
+    trace-id128: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          audience: https://bc.tdc.dk
+          x5t-uri: https://fed.pp.tdc.dk/ext/oauth/x509/x5t?v={x5t}
+
+management:
+  endpoint:
+    health:
+      show-details: always
+
+
+# Actuator info
+info:
+  project:
+    name: "@project.name@"
+    description: "@project.description@"
+    groupId: "@project.groupId@"
+    artifactId: "@project.artifactId@"
+    version: "@project.version@"
+    owner: DBUC <UnifiedCommunication@tdc.onmicrosoft.com>
+  build:
+    maven: "@maven.version@"
+    time: "@maven.build.timestamp@"
+    git:
+      commit: "@git.commit.id@"
+      describe: "@git.commit.id.describe@"
+    system:
+      user: "@user.name@"
+      os: "@os.name@/@os.arch@"
+    java:
+      runtime: "@java.runtime.name@"
+      vm: "@java.vm.name@"
+      version: "@java.version@"
+  runtime:
+    spring:
+      profile: ${spring.profiles.active:default}
+    system:
+      user: ${user.name}
+      os: ${os.name}/${os.arch}
+    java:
+      runtime: ${java.runtime.name}
+      vm: ${java.vm.name}
+      version: ${java.version}
+
+
+---
+
+spring:
+  profiles: prod
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          audience: https://bc.tdc.dk
+          x5t-uri: https://fed.tdc.dk/ext/oauth/x509/x5t?v={x5t}
+
