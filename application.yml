@@ -16,6 +16,8 @@ spring:
         jwt:
           audience: https://bc.tdc.dk
           x5t-uri: https://fed.pp.tdc.dk/ext/oauth/x509/x5t?v={x5t}
+    user: a
+    password: a
 
 management:
   endpoint:
